@@ -1,0 +1,7 @@
+{
+  "name": "Licious AI Assistant",
+  "description": "A premium AI-powered assistant for Licious, specializing in fresh meat, seafood, and gourmet culinary experiences.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
