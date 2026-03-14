@@ -39,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         'X-Title': 'Licious AI Assistant'
       },
       body: JSON.stringify({
-        model: 'google/gemini-3.1-flash-lite-preview',
+        model: 'google/gemini-1.5-flash',
         messages,
         temperature: 0.6,
         tools: [{

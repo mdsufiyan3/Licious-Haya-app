@@ -31,3 +31,10 @@ export interface ChatState {
   isLoading: boolean;
   view: ViewType;
 }
+
+// PWA types
+declare global {
+  interface Window {
+    deferredPrompt: any;
+  }
+}

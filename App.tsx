@@ -197,7 +197,7 @@ const App: React.FC = () => {
               // Trigger PWA install
               if ('serviceWorker' in navigator && window.deferredPrompt) {
                 window.deferredPrompt.prompt();
-                window.deferredPrompt.userChoice.then((choiceResult) => {
+                window.deferredPrompt.userChoice.then((choiceResult: { outcome: string }) => {
                   if (choiceResult.outcome === 'accepted') {
                     console.log('User accepted the install prompt');
                   }
