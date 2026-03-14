@@ -21,12 +21,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // Convert history to OpenRouter format
   const messages = [
-    { role: 'system', content: SYSTEM_PROMPT },
     ...(history ?? []).map(h => ({
       role: h.role,
       content: h.parts?.[0]?.text || ''
     })),
-    { role: 'user', content: message }
+    { role: 'user', content: SYSTEM_PROMPT + '\n\n' + message }
   ];
 
   try {
