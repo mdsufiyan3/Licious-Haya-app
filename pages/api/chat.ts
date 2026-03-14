@@ -39,26 +39,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         'X-Title': 'Licious AI Assistant'
       },
       body: JSON.stringify({
-        model: 'google/gemini-flash-1.0-8b',
+        model: 'google/gemini-flash-1.5',
         messages,
-        temperature: 0.6,
-        // tools: [{
-        //   type: 'function',
-        //   function: {
-        //     name: 'search_products',
-        //     description: "Use this ONLY when the user explicitly wants to SEE, VIEW, SHOW, or BUY specific Licious products. Do NOT use for general conversation or recipe advice.",
-        //     parameters: {
-        //       type: 'object',
-        //       properties: {
-        //         query: {
-        //           type: 'string',
-        //           description: "The product name or category to find (e.g., 'chicken', 'fish', 'lamb')."
-        //         }
-        //       },
-        //       required: ['query']
-        //     }
-        //   }
-        // }]
+        temperature: 0.6
       })
     });
 
@@ -78,16 +61,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let text = choice.message?.content || '';
     let products = null;
 
-    // // Check for tool calls
-    // const toolCalls = choice.message?.tool_calls;
-    // if (toolCalls && toolCalls.length > 0) {
-    //   const toolCall = toolCalls[0];
-    //   if (toolCall.function.name === 'search_products') {
-    //     const args = JSON.parse(toolCall.function.arguments);
-    //     products = searchProducts(args.query);
-    //   }
-    // }
-
     if (products && products.length > 0 && !text) {
       text = `Here are some of our premium ${products[0].name.toLowerCase()} cuts I found for you:`;
     } else if (!text) {
@@ -97,6 +70,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json({ text, products });
   } catch (error) {
     console.error('Chat API error:', error);
-    return res.status(500).json({ error: 'Failed to process chat request' });
+    // Fallback mock response for testing
+    return res.status(200).json({ 
+      text: "I'm Haya, your Licious assistant. I'm currently experiencing some technical difficulties with my connection. Please try again later or contact support.",
+      products: null 
+    });
   }
 }
