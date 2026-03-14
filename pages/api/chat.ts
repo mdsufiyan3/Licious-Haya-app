@@ -59,15 +59,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     let text = choice.message?.content || '';
-    let products = null;
 
-    if (products && products.length > 0 && !text) {
-      text = `Here are some of our premium ${products[0].name.toLowerCase()} cuts I found for you:`;
-    } else if (!text) {
+    if (!text) {
       text = "I'm Haya, your Licious assistant. How can I help you today?";
     }
 
-    return res.status(200).json({ text, products });
+    return res.status(200).json({ text, products: null });
   } catch (error) {
     console.error('Chat API error:', error);
     // Fallback mock response for testing
