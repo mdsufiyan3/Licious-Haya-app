@@ -42,23 +42,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         model: 'google/gemini-1.5-flash',
         messages,
         temperature: 0.6,
-        tools: [{
-          type: 'function',
-          function: {
-            name: 'search_products',
-            description: "Use this ONLY when the user explicitly wants to SEE, VIEW, SHOW, or BUY specific Licious products. Do NOT use for general conversation or recipe advice.",
-            parameters: {
-              type: 'object',
-              properties: {
-                query: {
-                  type: 'string',
-                  description: "The product name or category to find (e.g., 'chicken', 'fish', 'lamb')."
-                }
-              },
-              required: ['query']
-            }
-          }
-        }]
+        // tools: [{
+        //   type: 'function',
+        //   function: {
+        //     name: 'search_products',
+        //     description: "Use this ONLY when the user explicitly wants to SEE, VIEW, SHOW, or BUY specific Licious products. Do NOT use for general conversation or recipe advice.",
+        //     parameters: {
+        //       type: 'object',
+        //       properties: {
+        //         query: {
+        //           type: 'string',
+        //           description: "The product name or category to find (e.g., 'chicken', 'fish', 'lamb')."
+        //         }
+        //       },
+        //       required: ['query']
+        //     }
+        //   }
+        // }]
       })
     });
 
@@ -76,15 +76,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let text = choice.message?.content || '';
     let products = null;
 
-    // Check for tool calls
-    const toolCalls = choice.message?.tool_calls;
-    if (toolCalls && toolCalls.length > 0) {
-      const toolCall = toolCalls[0];
-      if (toolCall.function.name === 'search_products') {
-        const args = JSON.parse(toolCall.function.arguments);
-        products = searchProducts(args.query);
-      }
-    }
+    // // Check for tool calls
+    // const toolCalls = choice.message?.tool_calls;
+    // if (toolCalls && toolCalls.length > 0) {
+    //   const toolCall = toolCalls[0];
+    //   if (toolCall.function.name === 'search_products') {
+    //     const args = JSON.parse(toolCall.function.arguments);
+    //     products = searchProducts(args.query);
+    //   }
+    // }
 
     if (products && products.length > 0 && !text) {
       text = `Here are some of our premium ${products[0].name.toLowerCase()} cuts I found for you:`;
