@@ -19,13 +19,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(500).json({ error: 'Missing OPENROUTER_API_KEY' });
   }
 
-  // Convert history to OpenRouter format
+  // Convert history to OpenRouter format - xAI doesn't support conversation history well
   const messages = [
-    ...(history && history.length > 0 ? [] : [{ role: 'system', content: SYSTEM_PROMPT }]),
-    ...(history ?? []).map(h => ({
-      role: h.role === 'assistant' ? 'ai' : h.role,
-      content: h.parts?.[0]?.text || ''
-    })),
+    { role: 'system', content: SYSTEM_PROMPT },
     { role: 'user', content: message }
   ];
 
@@ -39,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         'X-Title': 'Licious AI Assistant'
       },
       body: JSON.stringify({
-        model: 'x-ai/grok-3-mini',
+        model: 'openai/gpt-3.5-turbo',
         messages,
         temperature: 0.6
       })
