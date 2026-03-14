@@ -227,7 +227,7 @@ const App: React.FC = () => {
             </div>
         </header>
 
-        <div ref={scrollRef} className="flex-1 overflow-y-auto pt-2 pb-24 md:pb-6 space-y-10 scrollbar-hide">
+        <div ref={scrollRef} className="flex-1 overflow-y-auto pt-2 pb-28 md:pb-6 space-y-10 scrollbar-hide">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center space-y-10 mt-[-20px] animate-in fade-in duration-700">
               <div className="w-24 h-24 rounded-[32px] bg-white border border-gray-100 flex items-center justify-center shadow-2xl relative">
