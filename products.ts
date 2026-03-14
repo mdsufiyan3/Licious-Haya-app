@@ -1,4 +1,4 @@
-import { Product } from './types.ts';
+import { Product } from './types';
 
 export const LICIOUS_PRODUCTS: Product[] = [
   {

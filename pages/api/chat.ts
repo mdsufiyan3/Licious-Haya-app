@@ -1,23 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { GoogleGenAI, Type, FunctionDeclaration } from '@google/genai';
 import { SYSTEM_PROMPT } from '../../constants';
 import { searchProducts } from '../../products';
-
-const searchProductsTool: FunctionDeclaration = {
-  name: 'search_products',
-  parameters: {
-    type: Type.OBJECT,
-    description:
-      "Use this ONLY when the user explicitly wants to SEE, VIEW, SHOW, or BUY specific Licious products. Do NOT use for general conversation or recipe advice.",
-    properties: {
-      query: {
-        type: Type.STRING,
-        description: "The product name or category to find (e.g., 'chicken', 'fish', 'lamb').",
-      },
-    },
-    required: ['query'],
-  },
-};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -31,44 +14,87 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ error: 'Missing message' });
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: 'Missing GEMINI_API_KEY' });
+    return res.status(500).json({ error: 'Missing OPENROUTER_API_KEY' });
   }
 
-  const ai = new GoogleGenAI({ apiKey });
+  // Convert history to OpenRouter format
+  const messages = [
+    { role: 'system', content: SYSTEM_PROMPT },
+    ...(history ?? []).map(h => ({
+      role: h.role,
+      content: h.parts?.[0]?.text || ''
+    })),
+    { role: 'user', content: message }
+  ];
 
-  const response = await ai.models.generateContent({
-    model: 'gemini-3-flash-preview',
-    contents: [
-      ...(history ?? []),
-      { role: 'user', parts: [{ text: message }] },
-    ],
-    config: {
-      systemInstruction: SYSTEM_PROMPT,
-      tools: [{ functionDeclarations: [searchProductsTool] }],
-      temperature: 0.6,
-    },
-  });
+  try {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+        'X-Title': 'Licious AI Assistant'
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-3.1-flash-lite-preview',
+        messages,
+        temperature: 0.6,
+        tools: [{
+          type: 'function',
+          function: {
+            name: 'search_products',
+            description: "Use this ONLY when the user explicitly wants to SEE, VIEW, SHOW, or BUY specific Licious products. Do NOT use for general conversation or recipe advice.",
+            parameters: {
+              type: 'object',
+              properties: {
+                query: {
+                  type: 'string',
+                  description: "The product name or category to find (e.g., 'chicken', 'fish', 'lamb')."
+                }
+              },
+              required: ['query']
+            }
+          }
+        }]
+      })
+    });
 
-  const functionCalls = response.functionCalls;
-  let products = null;
-
-  if (functionCalls && functionCalls.length > 0) {
-    const call = functionCalls[0];
-    if (call.name === 'search_products') {
-      const args = call.args as { query: string };
-      products = searchProducts(args.query);
+    if (!response.ok) {
+      throw new Error(`OpenRouter API error: ${response.status} ${response.statusText}`);
     }
+
+    const data = await response.json();
+    const choice = data.choices?.[0];
+
+    if (!choice) {
+      return res.status(500).json({ error: 'No response from AI' });
+    }
+
+    let text = choice.message?.content || '';
+    let products = null;
+
+    // Check for tool calls
+    const toolCalls = choice.message?.tool_calls;
+    if (toolCalls && toolCalls.length > 0) {
+      const toolCall = toolCalls[0];
+      if (toolCall.function.name === 'search_products') {
+        const args = JSON.parse(toolCall.function.arguments);
+        products = searchProducts(args.query);
+      }
+    }
+
+    if (products && products.length > 0 && !text) {
+      text = `Here are some of our premium ${products[0].name.toLowerCase()} cuts I found for you:`;
+    } else if (!text) {
+      text = "I'm Haya, your Licious assistant. How can I help you today?";
+    }
+
+    return res.status(200).json({ text, products });
+  } catch (error) {
+    console.error('Chat API error:', error);
+    return res.status(500).json({ error: 'Failed to process chat request' });
   }
-
-  let text = response.text || '';
-
-  if (products && products.length > 0 && !text) {
-    text = `Here are some of our premium ${products[0].name.toLowerCase()} cuts I found for you:`;
-  } else if (!text) {
-    text = "I'm Haya, your Licious assistant. How can I help you today?";
-  }
-
-  return res.status(200).json({ text, products });
 }

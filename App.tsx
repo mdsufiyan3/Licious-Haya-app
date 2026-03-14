@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Message, MessageRole, Product } from './types.ts';
-import { ChefHatIcon, FishIcon, SendIcon, SparkleIcon } from './constants.tsx';
-import { chatWithHaya } from './services/geminiService.ts';
+import { Message, MessageRole, Product } from './types';
+import { ChefHatIcon, FishIcon, SendIcon, SparkleIcon } from './constants';
+import { chatWithHaya } from './services/geminiService';
 
 const parseInline = (text: string) => {
   const parts = text.split(/(\*\*.*?\*\*)/g);
