@@ -5,7 +5,9 @@ const config: Config = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './App.tsx',
-    './**/*.{ts,tsx}'
+    './types.ts',
+    './constants.tsx',
+    './products.ts'
   ],
   theme: {
     extend: {},

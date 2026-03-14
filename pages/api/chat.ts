@@ -39,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         'X-Title': 'Licious AI Assistant'
       },
       body: JSON.stringify({
-        model: 'google/gemini-1.5-flash',
+        model: 'google/gemini-flash-1.0-8b',
         messages,
         temperature: 0.6,
         // tools: [{
@@ -63,6 +63,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error('OpenRouter error:', response.status, errorText);
       throw new Error(`OpenRouter API error: ${response.status} ${response.statusText}`);
     }
 
