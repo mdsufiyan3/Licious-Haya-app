@@ -212,7 +212,7 @@ const App: React.FC = () => {
         </div>
       </aside>
 
-      <main className="flex-1 flex flex-col relative max-w-4xl mx-auto w-full px-4 md:px-6">
+      <main className="flex-1 flex flex-col relative max-w-4xl mx-auto w-full px-4 md:px-6 overflow-hidden">
         <header className="py-4 flex items-center justify-between border-b border-gray-100 mb-2 bg-white/50 backdrop-blur-md sticky top-0 z-20">
             <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-[#E21D24] flex items-center justify-center text-white font-black italic shadow-lg shadow-red-200">L</div>
@@ -227,7 +227,7 @@ const App: React.FC = () => {
             </div>
         </header>
 
-        <div ref={scrollRef} className="flex-1 overflow-y-auto pt-2 pb-6 space-y-10 scrollbar-hide">
+        <div ref={scrollRef} className="flex-1 overflow-y-auto pt-2 pb-32 md:pb-6 space-y-10 scrollbar-hide">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center space-y-10 mt-[-20px] animate-in fade-in duration-700">
               <div className="w-24 h-24 rounded-[32px] bg-white border border-gray-100 flex items-center justify-center shadow-2xl relative">
@@ -296,8 +296,8 @@ const App: React.FC = () => {
           )}
         </div>
 
-        <div className="pb-8 pt-2 bg-white/80 backdrop-blur-xl">
-          <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide">
+        <div className="pb-20 pt-2 bg-white/80 backdrop-blur-xl border-t border-gray-100 md:pb-8 fixed md:static bottom-0 left-0 right-0 md:relative w-full md:w-auto z-50">
+          <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide px-4 md:px-0">
             <button onClick={() => setInputText("Show me fresh chicken breast")} className="flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-[12px] font-bold text-gray-600 whitespace-nowrap hover:bg-white hover:border-[#E21D24] hover:text-[#E21D24] transition-all shadow-sm">
               <ChefHatIcon /> Chicken Breast
             </button>
@@ -308,7 +308,7 @@ const App: React.FC = () => {
               <FishIcon /> Atlantic Salmon
             </button>
           </div>
-          <div className="bg-[#F9F9F9] rounded-[24px] px-4 py-2.5 border border-gray-200 focus-within:border-[#E21D24] focus-within:bg-white shadow-sm focus-within:shadow-xl transition-all flex items-end gap-2 min-h-[56px] relative">
+          <div className="bg-[#F9F9F9] rounded-[24px] px-4 py-2.5 mx-4 md:mx-0 border border-gray-200 focus-within:border-[#E21D24] focus-within:bg-white shadow-sm focus-within:shadow-xl transition-all flex items-end gap-2 min-h-[56px] relative">
               <textarea
                   ref={textareaRef}
                   value={inputText}
