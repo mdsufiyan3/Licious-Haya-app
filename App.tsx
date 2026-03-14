@@ -296,7 +296,7 @@ const App: React.FC = () => {
           )}
         </div>
 
-        <div className="pb-20 pt-2 bg-white/80 backdrop-blur-xl border-t border-gray-100 md:pb-8 fixed md:static bottom-0 left-0 right-0 md:relative w-full md:w-auto z-50">
+        <div className="pb-20 pt-2 bg-white/80 backdrop-blur-xl border-t border-gray-100 md:pb-8 fixed md:static bottom-4 left-0 right-0 md:relative w-full md:w-auto z-50 mx-2 md:mx-0 rounded-t-2xl md:rounded-none">
           <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide px-4 md:px-0">
             <button onClick={() => setInputText("Show me fresh chicken breast")} className="flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-[12px] font-bold text-gray-600 whitespace-nowrap hover:bg-white hover:border-[#E21D24] hover:text-[#E21D24] transition-all shadow-sm">
               <ChefHatIcon /> Chicken Breast
