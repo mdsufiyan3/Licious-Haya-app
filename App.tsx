@@ -166,6 +166,52 @@ const App: React.FC = () => {
     <div className="flex h-screen w-full bg-white text-[#1A1A1A] overflow-hidden relative font-sans">
       <div className="absolute top-0 left-0 right-0 h-[200px] bg-gradient-to-b from-[#FFF5F5] to-white -z-10" />
 
+      {/* Sidebar for desktop */}
+      <aside className="hidden md:flex flex-col w-64 bg-white border-r border-gray-200 p-6">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-10 h-10 rounded-xl bg-[#E21D24] flex items-center justify-center text-white font-black italic shadow-lg shadow-red-200">L</div>
+          <div>
+            <h2 className="text-lg font-bold tracking-tight">Licious Haya</h2>
+            <p className="text-xs text-gray-500">AI Assistant</p>
+          </div>
+        </div>
+
+        <nav className="flex-1 space-y-2">
+          <button className="w-full text-left px-4 py-2 rounded-lg bg-[#E21D24] text-white font-medium">
+            Chat with Haya
+          </button>
+          <button className="w-full text-left px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50">
+            Fresh Products
+          </button>
+          <button className="w-full text-left px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50">
+            Recipes
+          </button>
+          <button className="w-full text-left px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50">
+            About Licious
+          </button>
+        </nav>
+
+        <div className="mt-8">
+          <button
+            onClick={() => {
+              // Trigger PWA install
+              if ('serviceWorker' in navigator && window.deferredPrompt) {
+                window.deferredPrompt.prompt();
+                window.deferredPrompt.userChoice.then((choiceResult) => {
+                  if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                  }
+                  window.deferredPrompt = null;
+                });
+              }
+            }}
+            className="w-full bg-[#E21D24] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#C1181E] transition-colors"
+          >
+            Download App
+          </button>
+        </div>
+      </aside>
+
       <main className="flex-1 flex flex-col relative max-w-4xl mx-auto w-full px-4 md:px-6">
         <header className="py-4 flex items-center justify-between border-b border-gray-100 mb-2 bg-white/50 backdrop-blur-md sticky top-0 z-20">
             <div className="flex items-center gap-3">
