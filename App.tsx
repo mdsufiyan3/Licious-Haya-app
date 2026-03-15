@@ -206,7 +206,7 @@ const App: React.FC = () => {
           <img 
             src="https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf"
             alt="Licious Haya Logo"
-            className="w-10 h-10 rounded-xl object-contain shadow-lg shadow-red-200"
+            className="w-8 h-8 rounded-lg object-contain shadow-lg shadow-red-200"
           />
           <div>
             <h2 className="text-lg font-bold tracking-tight">Licious Haya</h2>
@@ -250,7 +250,7 @@ const App: React.FC = () => {
             <img 
               src="https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf"
               alt="Licious Haya Logo"
-              className="w-10 h-10 rounded-xl object-contain shadow-lg shadow-red-200"
+              className="w-8 h-8 rounded-lg object-contain shadow-lg shadow-red-200"
             />
             <div>
               <h1 className="text-sm font-bold tracking-tight">Licious Haya</h1>
@@ -277,7 +277,7 @@ const App: React.FC = () => {
               <img 
                 src="https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf"
                 alt="Licious Haya Logo"
-                className="w-24 h-24 rounded-[32px] object-contain border border-gray-100 shadow-2xl p-2 bg-white"
+                className="w-16 h-16 rounded-2xl object-contain border border-gray-100 shadow-xl p-2 bg-white"
               />
               <div className="space-y-3 max-w-sm px-4">
                 <p className="text-[#1A1A1A] font-bold text-2xl leading-tight">
