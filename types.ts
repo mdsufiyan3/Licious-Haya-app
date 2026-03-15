@@ -4,6 +4,14 @@ export enum MessageRole {
   ASSISTANT = 'assistant'
 }
 
+export enum ProductCategory {
+  CHICKEN = 'Chicken',
+  RED_MEAT = 'Red Meat',
+  SEAFOOD = 'Seafood',
+  EGGS = 'Eggs',
+  COMBO = 'Combo Pack'
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -12,6 +20,7 @@ export interface Product {
   imageUrl: string;
   productUrl: string;
   description: string;
+  category: ProductCategory;
 }
 
 export interface Message {

@@ -62,36 +62,50 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Check if user wants to see products
     const lowerMessage = message.toLowerCase();
-    const productKeywords = ['show', 'see', 'view', 'buy', 'have', 'available', 'products', 'chicken', 'mutton', 'fish', 'salmon', 'eggs', 'prawns', 'meat', 'fresh'];
+    const productKeywords = ['show', 'see', 'view', 'buy', 'have', 'available', 'products', 'chicken', 'mutton', 'fish', 'salmon', 'eggs', 'prawns', 'meat', 'fresh', 'get', 'want', 'need', 'any', 'do you', 'got', 'can i', 'take', 'give'];
     let products = null;
     
     // Check if user is asking for ALL products together
-    const isAskingForAll = /all products|show all|all items|what products|all curry|everything/i.test(lowerMessage);
+    const isAskingForAll = /all products|show all|all items|what products|all curry|everything|list all|all available|what do you have|what you got/i.test(lowerMessage);
     
-    if (productKeywords.some(keyword => lowerMessage.includes(keyword))) {
+    // Check if user is asking for products
+    const isAskingForProducts = productKeywords.some(keyword => lowerMessage.includes(keyword)) || 
+                                /\b(recommend|suggest|what|which|best)\b/.test(lowerMessage);
+    
+    if (isAskingForProducts) {
       // Extract product query from message
       let query = lowerMessage
-        .replace(/show me|see me|view|display|do you have|have you got|available|fresh|can i get|give me|show|see/gi, '')
+        .replace(/show me|see me|view|display|do you have|have you got|available|fresh|can i get|give me|show|see|you have|got any|take|give me|want|need|can you/gi, '')
         .trim();
       
-      // If query is empty after removing keywords, use the original message
-      if (!query || query.length < 2) {
-        query = lowerMessage;
-      }
+      // Remove common question words
+      query = query.replace(/\?|what|which|do|you|any|a |the |some /gi, '').trim();
       
-      // ALWAYS try to find a specific product match first
-      const specificProduct = findSpecificProduct(query);
-      if (specificProduct) {
-        // User is asking for a specific product - return ONLY that one, NEVER multiple
-        products = [specificProduct];
-      } else if (isAskingForAll) {
-        // Only show all products if user explicitly asks for "all products"
-        const allProducts = searchProducts(query);
-        if (allProducts.length > 0) {
-          products = allProducts;
+      // If query is empty or too vague after removing keywords, don't show products
+      if (!query || query.length < 2) {
+        if (isAskingForAll) {
+          // Only show all if explicitly asked
+          const allProducts = searchProducts(lowerMessage);
+          if (allProducts.length > 0) {
+            products = allProducts;
+          }
         }
+        // Otherwise no products shown for vague queries
+      } else {
+        // Try to find a specific product match
+        const specificProduct = findSpecificProduct(query);
+        if (specificProduct) {
+          // User is asking for a specific product - return ONLY that one
+          products = [specificProduct];
+        } else if (isAskingForAll) {
+          // Show all if user explicitly asks for all
+          const allProducts = searchProducts(query);
+          if (allProducts.length > 0) {
+            products = allProducts;
+          }
+        }
+        // Otherwise return null (no products) - don't show random matches
       }
-      // Otherwise return null (no products) - don't show random matches
     }
 
     return res.status(200).json({ text, products });
