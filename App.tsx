@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { Message, MessageRole, Product } from './types';
 import { ChefHatIcon, FishIcon, SendIcon, SparkleIcon } from './constants';
 import { chatWithHaya } from './services/geminiService';
@@ -180,9 +181,12 @@ const App: React.FC = () => {
           <button className="w-full text-left px-4 py-2 rounded-lg bg-[#E21D24] text-white font-medium">
             Chat with Haya
           </button>
-          <button className="w-full text-left px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50">
+          <Link 
+            href="/products" 
+            className="w-full text-left px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 block"
+          >
             Fresh Products
-          </button>
+          </Link>
           <button className="w-full text-left px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50">
             Recipes
           </button>
@@ -213,16 +217,24 @@ const App: React.FC = () => {
 
       <main className="flex-1 flex flex-col relative max-w-4xl mx-auto w-full px-4 md:px-6 overflow-hidden">
         <header className="py-4 flex items-center justify-between border-b border-gray-100 mb-2 bg-white/50 backdrop-blur-md sticky top-0 z-20">
-          <div className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <div className="w-10 h-10 rounded-xl bg-[#E21D24] flex items-center justify-center text-white font-black italic shadow-lg shadow-red-200">L</div>
             <div>
               <h1 className="text-sm font-bold tracking-tight">Licious Haya</h1>
               <p className="text-[10px] text-gray-500 font-medium uppercase tracking-widest">Freshness Concierge</p>
             </div>
-          </div>
-          <div className="flex items-center gap-1 bg-green-50 px-2 py-1 rounded-full">
-            <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-            <span className="text-[10px] text-green-700 font-bold uppercase tracking-wider">Kitchen Live</span>
+          </Link>
+          <div className="flex items-center gap-4">
+            <Link 
+              href="/products" 
+              className="text-xs font-bold text-gray-600 hover:text-[#E21D24] transition-colors px-3 py-1 rounded-lg hover:bg-red-50"
+            >
+              All Products
+            </Link>
+            <div className="flex items-center gap-1 bg-green-50 px-2 py-1 rounded-full">
+              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+              <span className="text-[10px] text-green-700 font-bold uppercase tracking-wider">Kitchen Live</span>
+            </div>
           </div>
         </header>
 

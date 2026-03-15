@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { SYSTEM_PROMPT } from '../../constants';
-import { searchProducts } from '../../products';
+import { searchProducts, findSpecificProduct } from '../../products';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -76,10 +76,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         query = lowerMessage;
       }
       
-      // Always search for products with the query
-      const foundProducts = searchProducts(query);
-      if (foundProducts.length > 0) {
-        products = foundProducts;
+      // First, try to find a specific product match
+      const specificProduct = findSpecificProduct(query);
+      if (specificProduct) {
+        // User is asking for a specific product - return only that one
+        products = [specificProduct];
+      } else {
+        // User is asking for general products or multiple items - return all matching products
+        const foundProducts = searchProducts(query);
+        if (foundProducts.length > 0) {
+          products = foundProducts;
+        }
       }
     }
 
