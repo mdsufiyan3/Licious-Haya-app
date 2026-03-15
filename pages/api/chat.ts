@@ -37,7 +37,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       body: JSON.stringify({
         model: 'openai/gpt-3.5-turbo',
         messages,
-        temperature: 0.6
+        temperature: 0.6,
+        max_tokens: 5000
       })
     });
 
@@ -65,46 +66,84 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const productKeywords = ['show', 'see', 'view', 'buy', 'have', 'available', 'products', 'chicken', 'mutton', 'fish', 'salmon', 'eggs', 'prawns', 'meat', 'fresh', 'get', 'want', 'need', 'any', 'do you', 'got', 'can i', 'take', 'give'];
     let products = null;
     
-    // Check if user is asking for ALL products together
-    const isAskingForAll = /all products|show all|all items|what products|all curry|everything|list all|all available|what do you have|what you got/i.test(lowerMessage);
+    // Check if user is confirming (yes/yas/ok, etc) a previous request
+    const isConfirming = /^(yes|yas|yup|yeah|ok|sure|alright|absolutely|definitely|please|proceed|show|go ahead|ok|oks|y)$/i.test(lowerMessage.trim());
     
-    // Check if user is asking for products
-    const isAskingForProducts = productKeywords.some(keyword => lowerMessage.includes(keyword)) || 
-                                /\b(recommend|suggest|what|which|best)\b/.test(lowerMessage);
-    
-    if (isAskingForProducts) {
-      // Extract product query from message
-      let query = lowerMessage
-        .replace(/show me|see me|view|display|do you have|have you got|available|fresh|can i get|give me|show|see|you have|got any|take|give me|want|need|can you/gi, '')
-        .trim();
-      
-      // Remove common question words
-      query = query.replace(/\?|what|which|do|you|any|a |the |some /gi, '').trim();
-      
-      // If query is empty or too vague after removing keywords, don't show products
-      if (!query || query.length < 2) {
-        if (isAskingForAll) {
-          // Only show all if explicitly asked
-          const allProducts = searchProducts(lowerMessage);
-          if (allProducts.length > 0) {
-            products = allProducts;
+    if (isConfirming && history && history.length > 0) {
+      // Look back in history to find the product request
+      for (let i = history.length - 1; i >= 0; i--) {
+        const historyMessage = history[i];
+        if (historyMessage.role === 'user') {
+          const prevUserMsg = historyMessage.parts?.[0]?.text || '';
+          const prevLower = prevUserMsg.toLowerCase();
+          
+          // Check if previous user message was asking for a product
+          const hasProductKeywords = productKeywords.some(keyword => prevLower.includes(keyword));
+          if (hasProductKeywords) {
+            // Extract product query from previous message
+            let query = prevLower
+              .replace(/show me|see me|view|display|do you have|have you got|available|fresh|can i get|give me|show|see|you have|got any|take|give me|want|need|can you/gi, '')
+              .trim();
+            
+            // Remove common question words
+            query = query.replace(/\?|what|which|do|you|any|a |the |some /gi, '').trim();
+            
+            if (query && query.length > 2) {
+              // Try to find the specific product from the previous request
+              const specificProduct = findSpecificProduct(query);
+              if (specificProduct) {
+                products = [specificProduct];
+              }
+            }
+            break;
           }
         }
-        // Otherwise no products shown for vague queries
-      } else {
-        // Try to find a specific product match
-        const specificProduct = findSpecificProduct(query);
-        if (specificProduct) {
-          // User is asking for a specific product - return ONLY that one
-          products = [specificProduct];
-        } else if (isAskingForAll) {
-          // Show all if user explicitly asks for all
-          const allProducts = searchProducts(query);
-          if (allProducts.length > 0) {
-            products = allProducts;
+      }
+    }
+    
+    // If no confirmation follow-up, check current message for product requests
+    if (!products) {
+      // Check if user is asking for ALL products together
+      const isAskingForAll = /all products|show all|all items|what products|all curry|everything|list all|all available|what do you have|what you got/i.test(lowerMessage);
+      
+      // Check if user is asking for products
+      const isAskingForProducts = productKeywords.some(keyword => lowerMessage.includes(keyword)) || 
+                                  /\b(recommend|suggest|what|which|best)\b/.test(lowerMessage);
+      
+      if (isAskingForProducts) {
+        // Extract product query from message
+        let query = lowerMessage
+          .replace(/show me|see me|view|display|do you have|have you got|available|fresh|can i get|give me|show|see|you have|got any|take|give me|want|need|can you/gi, '')
+          .trim();
+        
+        // Remove common question words
+        query = query.replace(/\?|what|which|do|you|any|a |the |some /gi, '').trim();
+        
+        // If query is empty or too vague after removing keywords, don't show products
+        if (!query || query.length < 2) {
+          if (isAskingForAll) {
+            // Only show all if explicitly asked
+            const allProducts = searchProducts(lowerMessage);
+            if (allProducts.length > 0) {
+              products = allProducts;
+            }
           }
+          // Otherwise no products shown for vague queries
+        } else {
+          // Try to find a specific product match
+          const specificProduct = findSpecificProduct(query);
+          if (specificProduct) {
+            // User is asking for a specific product - return ONLY that one
+            products = [specificProduct];
+          } else if (isAskingForAll) {
+            // Show all if user explicitly asks for all
+            const allProducts = searchProducts(query);
+            if (allProducts.length > 0) {
+              products = allProducts;
+            }
+          }
+          // Otherwise return null (no products) - don't show random matches
         }
-        // Otherwise return null (no products) - don't show random matches
       }
     }
 
