@@ -97,8 +97,41 @@ const App: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [canInstall, setCanInstall] = useState(false);
+  const [showInstallPrompt, setShowInstallPrompt] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleInstallClick = () => {
+    if (window.deferredPrompt) {
+      window.deferredPrompt.prompt();
+      window.deferredPrompt.userChoice.then((choiceResult: { outcome: string }) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('✅ User installed Licious Haya app!');
+          setCanInstall(false);
+          setShowInstallPrompt(false);
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+        window.deferredPrompt = null;
+      });
+    }
+  };
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      window.deferredPrompt = e as any;
+      setCanInstall(true);
+      setShowInstallPrompt(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
 
   const scrollToBottom = () => {
     if (scrollRef.current) {
@@ -200,22 +233,14 @@ const App: React.FC = () => {
         </nav>
 
         <div className="mt-8">
-          <button
-            onClick={() => {
-              if ('serviceWorker' in navigator && window.deferredPrompt) {
-                window.deferredPrompt.prompt();
-                window.deferredPrompt.userChoice.then((choiceResult: { outcome: string }) => {
-                  if (choiceResult.outcome === 'accepted') {
-                    console.log('User accepted the install prompt');
-                  }
-                  window.deferredPrompt = null;
-                });
-              }
-            }}
-            className="w-full bg-[#E21D24] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#C1181E] transition-colors"
-          >
-            Download App
-          </button>
+          {canInstall && (
+            <button
+              onClick={handleInstallClick}
+              className="w-full bg-[#E21D24] text-white px-4 py-3 rounded-lg font-bold hover:bg-[#C1181E] transition-all shadow-lg hover:shadow-xl active:scale-95"
+            >
+              📱 Download App
+            </button>
+          )}
         </div>
       </aside>
 
@@ -392,6 +417,39 @@ const App: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Mobile Download App Prompt */}
+        {canInstall && showInstallPrompt && (
+          <div className="fixed bottom-0 left-0 right-0 md:hidden bg-gradient-to-t from-[#1A1A1A]/95 to-[#1A1A1A]/85 backdrop-blur p-4 rounded-t-3xl shadow-2xl z-50 animate-in slide-in-from-bottom-5 duration-300">
+            <div className="max-w-md mx-auto">
+              <div className="flex items-start gap-3 mb-4">
+                <img 
+                  src="https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf"
+                  alt="Licious Haya Logo"
+                  className="w-12 h-12 rounded-xl object-contain flex-shrink-0"
+                />
+                <div className="flex-1">
+                  <h3 className="text-white font-bold text-[16px]">Get Licious Haya App</h3>
+                  <p className="text-white/70 text-[13px] leading-tight">Install for quick access to fresh products & recipes</p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowInstallPrompt(false)}
+                  className="flex-1 px-4 py-2.5 rounded-lg bg-white/10 text-white text-sm font-bold hover:bg-white/20 transition-all"
+                >
+                  Not Now
+                </button>
+                <button
+                  onClick={handleInstallClick}
+                  className="flex-1 px-4 py-2.5 rounded-lg bg-[#E21D24] text-white text-sm font-bold hover:bg-[#C1181E] transition-all shadow-lg active:scale-95"
+                >
+                  📱 Install Now
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );

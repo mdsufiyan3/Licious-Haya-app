@@ -1,9 +1,57 @@
 {
   "name": "Licious Haya - AI Assistant",
   "short_name": "Licious Haya",
-  "description": "Your AI assistant for fresh Licious products and recipes",
+  "description": "Your AI assistant for fresh Licious premium products and recipes. Get personalized recommendations with Haya powered by AI.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#FFFFFF",
-  "theme_color": "#E21D24"
+  "theme_color": "#E21D24",
+  "icons": [
+    {
+      "src": "https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Chat with Haya",
+      "short_name": "Chat",
+      "description": "Start chatting with Haya AI Assistant",
+      "url": "/",
+      "icons": [
+        {
+          "src": "https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "All Products",
+      "short_name": "Products",
+      "description": "Browse all fresh Licious products",
+      "url": "/products",
+      "icons": [
+        {
+          "src": "https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
 }
