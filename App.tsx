@@ -257,18 +257,6 @@ const App: React.FC = () => {
               <p className="text-[10px] text-gray-500 font-medium uppercase tracking-widest">Freshness Concierge</p>
             </div>
           </Link>
-          <div className="flex items-center gap-4">
-            <Link 
-              href="/products" 
-              className="text-xs font-bold text-gray-600 hover:text-[#E21D24] transition-colors px-3 py-1 rounded-lg hover:bg-red-50"
-            >
-              All Products
-            </Link>
-            <div className="flex items-center gap-1 bg-green-50 px-2 py-1 rounded-full">
-              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-              <span className="text-[10px] text-green-700 font-bold uppercase tracking-wider">Kitchen Live</span>
-            </div>
-          </div>
         </header>
 
         <div ref={scrollRef} className="flex-1 overflow-y-auto pt-2 pb-28 md:pb-6 space-y-10 scrollbar-hide">
@@ -293,7 +281,11 @@ const App: React.FC = () => {
                   <div className={`flex flex-col gap-2 w-full ${msg.role === MessageRole.USER ? 'items-end' : 'items-start'}`}>
                     {msg.role === MessageRole.ASSISTANT && (
                       <div className="flex items-center gap-2 mb-1 px-1">
-                        <div className="w-6 h-6 rounded-lg bg-[#E21D24] text-white flex items-center justify-center text-[10px] font-black shadow-sm">H</div>
+                        <img 
+                          src="https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf"
+                          alt="Haya"
+                          className="w-6 h-6 rounded-lg object-contain"
+                        />
                         <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Haya</span>
                       </div>
                     )}
@@ -326,7 +318,11 @@ const App: React.FC = () => {
                 <div className="flex justify-start animate-in fade-in duration-300">
                   <div className="flex flex-col gap-2 w-full items-start">
                     <div className="flex items-center gap-2 mb-1 px-1">
-                      <div className="w-6 h-6 rounded-lg bg-[#E21D24] text-white flex items-center justify-center text-[10px] font-black">H</div>
+                      <img 
+                        src="https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf"
+                        alt="Haya"
+                        className="w-5 h-5 rounded-sm object-contain"
+                      />
                       <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Haya — Assistant</span>
                     </div>
                     <div className="py-1 px-1">
