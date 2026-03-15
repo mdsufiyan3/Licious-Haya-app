@@ -223,8 +223,8 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹249',
     weight: '6 Pieces | Serves 2-3',
     description: 'A perfect mix of thighs pieces and two drumsticks. Specialty cut from premium chicken legs. Juicy and tender, perfect for curries.',
-    imageUrl: '',
-    productUrl: ''
+    imageUrl: 'https://assets.licious.in/catalog-category/fb3bac35-ee59-49f6-a769-b6177313a3d9/original/1772542916434.png',
+    productUrl: 'https://www.licious.in/chicken/chicken-leg-curry-cut-6-pieces-pr_QdgJTgSqlyyz?isCombo=false&showAddon=false'
   },
   {
     id: 'p26',
@@ -232,8 +232,8 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹129',
     weight: '250g | 11-12 Pieces',
     description: 'Cleaned chicken bones for a delicious, flavourful stock. Perfect for making broths, soups, and risottos with rich, deep flavors.',
-    imageUrl: '',
-    productUrl: ''
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/12284840-bc72-b5d5-3502-c2a70deb0af6/original/1709004211209.jpg',
+    productUrl: 'https://www.licious.in/chicken/chicken-soup-bones---classic-pr_fhijtgw0ctk?isCombo=false&showAddon=false'
   },
   {
     id: 'p27',
@@ -241,8 +241,8 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹139',
     weight: '2 Pieces | Serves 1-2',
     description: 'Juicy bone-in chicken drumsticks, cut from the leg. Perfect portion for individual servings. Tender and flavorful.',
-    imageUrl: '',
-    productUrl: ''
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/f30f8735-63c9-e27f-2fc3-ea3c381e51e1/original/1716979330227.png',
+    productUrl: 'https://www.licious.in/chicken/chicken-drumsticks-pack-of-2-m-pr_fsglbgf2hjy?isCombo=false&showAddon=false'
   },
   {
     id: 'p28',
@@ -250,8 +250,8 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹139',
     weight: '250g | 10-16 Pieces',
     description: 'Perfectly cut pieces for authentic south-style fried kebabs. Boneless cuts ideal for kebabs, tandoori preparations, and frying.',
-    imageUrl: '',
-    productUrl: ''
+    imageUrl: 'https://cdn.licious.in/catalog/catalog-category/2e7b19b2-d15c-9200-02ab-bfe562b2082c/original/1741342570922.jpg',
+    productUrl: 'https://www.licious.in/chicken/chicken-kebab-fry-cut-pr_MefpmQCrzyXo?isCombo=false&showAddon=false'
   },
   {
     id: 'p29',
@@ -259,8 +259,8 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹331',
     weight: '550g | 6 Pieces | Serves 2-3',
     description: 'Juicy, tender chicken drumsticks & whole thigh pieces. Premium specialty cut exclusively for biryanis and special rice preparations.',
-    imageUrl: '',
-    productUrl: ''
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/7kyknomrcdb-41342570922/original/1741342570922.jpg',
+    productUrl: 'https://www.licious.in/chicken/chicken-tangdi---biryani-cut-pr_7kyknomrcdb?isCombo=false&showAddon=false'
   },
   {
     id: 'p30',
@@ -268,8 +268,8 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹235',
     weight: '5 Pieces | Serves 2-3',
     description: '5 juicy pieces for delicious biryanis. Specially cut and selected for biryani preparations. Tender and aromatic.',
-    imageUrl: '',
-    productUrl: ''
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/49c97553-a4de-c516-b6ec-585b18dce730/original/1716975438184.png',
+    productUrl: 'https://www.licious.in/chicken/chicken-classic-biryani-cut-pr_49c97553a4de?isCombo=false&showAddon=false'
   },
   {
     id: 'p31',
@@ -277,8 +277,8 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹195',
     weight: '10 Pieces | Serves 2',
     description: '10 pieces of meaty chicken lollipops. Deep-fried drumstick pieces with meat at the end. Perfect appetizer or party snack.',
-    imageUrl: '',
-    productUrl: ''
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/e6667c0b-9c08-db4d-d983-0d163aad4d80/original/1716976813189.png',
+    productUrl: 'https://www.licious.in/chicken/chicken-lollipop---10-pieces-pr_ejejbf09h51?isCombo=false&showAddon=false'
   },
   {
     id: 'p32',
@@ -286,8 +286,8 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹175',
     weight: '430g | 6 Pieces | Serves 3',
     description: 'Cut & cleaned chicken wings with skin. Crispy when fried, tender when roasted. Perfect for wings recipes and appetizers.',
-    imageUrl: '',
-    productUrl: ''
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/e2a11ae1-f6c4-ebce-23d6-82748829ffcd/original/1716974350376.png',
+    productUrl: 'https://www.licious.in/chicken/chicken-wings-with-skin-pr_e2a11ae1f6c4?isCombo=false&showAddon=false'
   },
   {
     id: 'p33',
@@ -295,8 +295,8 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹284',
     weight: '3 Pieces | Serves 2-3',
     description: 'Juicy bone-in leg pieces for delicious curries or biryanis. Premium quality with perfect bone-to-meat ratio. 3 pieces per pack.',
-    imageUrl: '',
-    productUrl: ''
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/a0cd52f4-673b-3cd0-db39-3025558eeb87/original/1716977113406.png',
+    productUrl: 'https://www.licious.in/chicken/chicken-wings---with-skin-pr_59a6c80d1840d?isCombo=false&showAddon=false'
   },
   {
     id: 'p34',
@@ -304,6 +304,60 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹291',
     weight: '6 Pieces | Serves 2-3',
     description: 'Juicy bone-in chicken drumsticks, cut from the leg. Perfect for curries, grilling, and tandoori preparations. 6 pieces per pack.',
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/17a10f2d-686e-1d51-5ab4-ff62e3a51ca5/original/1716979602116.png',
+    productUrl: 'https://www.licious.in/chicken/chicken-drumstick---pack-of-6-pr_4lal483r2ks?isCombo=false&showAddon=false'
+  },
+  {
+    id: 'p35',
+    name: 'Chicken Gizzard',
+    price: '₹175',
+    weight: '300g | 14-16 Pieces | Serves 2-3',
+    description: 'Rich, savoury & full of meaty chicken flavours. Tender gizzard pieces perfect for traditional curries and stir-fries. High in protein and nutrients.',
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/bce22ad2-fec5-af6f-1ba1-4895fee2dc0b/original/1716994035530.jpg',
+    productUrl: 'https://www.licious.in/chicken/chicken-gizzard-pr_faakepqiw2j?isCombo=false&showAddon=false'
+  },
+  {
+    id: 'p36',
+    name: 'Chicken Liver',
+    price: '₹165',
+    weight: '350g | 7-9 Pieces | Serves 2-3',
+    description: 'Smooth, rich & meaty chicken liver. Premium quality organ meat perfect for pâtés, curries, and traditional recipes. Full of flavor and nutrients.',
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/a93cf55e-b3c4-b6ca-23ba-0f782ec6cba2/original/1710239874728.jpg',
+    productUrl: 'https://www.licious.in/chicken/chicken-liver-pr_fagkepqge4h?isCombo=false&showAddon=false'
+  },
+  {
+    id: 'p37',
+    name: 'Chicken Curry Bonanza',
+    price: '₹319',
+    weight: '502g | Combo Pack',
+    description: 'Chicken Curry Cut (Large) + 2 Drumsticks. Perfect combo for a delicious family meal combining tender curry cuts with juicy drumsticks.',
+    imageUrl: 'https://dao54xqhg9jfa.cloudfront.net/OMS-ProductMerchantdising/40bb6baf-315f-6b63-2f1b-101ed902469d/original/PDP_80_Chicken_Curry_Bonanza-Chicken_Curry_Cut_+_Chicken_Drumsticks_-_Pack_of_2_(Mini_Pack).jpg',
+    productUrl: 'https://www.licious.in/chicken/chicken-curry-cut-chicken-drum-pr_lwylbpdhgz4?isCombo=true&showAddon=false'
+  },
+  {
+    id: 'p38',
+    name: 'Chicken Curry Delight',
+    price: '₹319',
+    weight: '502g | Combo Pack',
+    description: 'Chicken Curry Cut (Small) + 2 Drumsticks. Ideal combo pack with assorted chicken pieces for versatile cooking options.',
+    imageUrl: 'https://dao54xqhg9jfa.cloudfront.net/OMS-ProductMerchantdising/55fa8ca3-0e4e-90aa-f0fa-c02e84332ef5/original/PDP_73_Chicken_Curry_Delight.jpg',
+    productUrl: 'https://www.licious.in/chicken/chicken-curry-delight-updated-pr_d9plc04mk2n?isCombo=true&showAddon=false'
+  },
+  {
+    id: 'p39',
+    name: 'Chicken Curry Cut (Small) + Chicken Liver Combo',
+    price: '₹345',
+    weight: '850g | Combo Pack',
+    description: 'Tender, juicy, assorted chicken combo. Chicken Curry Cut (Small - 13 to 16 Pieces) + Chicken Liver. Premium combination for special recipes.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p40',
+    name: 'Chicken Curry Cut (Large) + Chicken Liver Combo',
+    price: '₹345',
+    weight: '850g | Combo Pack',
+    description: 'Juicy, tender chicken for meaty meals. Chicken Curry Cut (Large - 8 to 10 Pieces) + Chicken Liver. Premium assorted combo pack.',
     imageUrl: '',
     productUrl: ''
   }
