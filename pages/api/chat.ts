@@ -63,7 +63,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Check if user wants to see products
     const lowerMessage = message.toLowerCase();
-    const productKeywords = ['show', 'see', 'view', 'buy', 'have', 'available', 'products', 'chicken', 'mutton', 'fish', 'salmon', 'eggs', 'prawns', 'meat', 'fresh', 'get', 'want', 'need', 'any', 'do you', 'got', 'can i', 'take', 'give'];
+    const productKeywords = ['chicken', 'mutton', 'fish', 'salmon', 'eggs', 'prawns', 'meat', 'goat', 'lamb', 'drumstick', 'breast', 'thigh', 'curry', 'biryani', 'wing', 'lollipop', 'gizzard', 'liver', 'boneless', 'bone'];
+    const actionKeywords = ['show', 'see', 'view', 'buy', 'have', 'available', 'products', 'get', 'want', 'need', 'got', 'can i', 'take', 'tell me', 'about', 'what', 'which', 'best', 'good', 'recommend', 'suggest'];
     let products = null;
     
     // Check if user is confirming (yes/yas/ok, etc) a previous request
@@ -82,7 +83,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           if (hasProductKeywords) {
             // Extract product query from previous message
             let query = prevLower
-              .replace(/show me|see me|view|display|do you have|have you got|available|fresh|can i get|give me|show|see|you have|got any|take|give me|want|need|can you/gi, '')
+              .replace(/show me|see me|view|display|do you have|have you got|available|fresh|can i get|give me|show|see|you have|got any|take|give me|want|need|can you|tell me about|what is|which is|best|good/gi, '')
               .trim();
             
             // Remove common question words
@@ -104,20 +105,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // If no confirmation follow-up, check current message for product requests
     if (!products) {
       // Check if user is asking for ALL products together
-      const isAskingForAll = /all products|show all|all items|what products|all curry|everything|list all|all available|what do you have|what you got/i.test(lowerMessage);
+      const isAskingForAll = /all products|show all|all items|what products|all curry|everything|list all|all available|what do you have|what you got|do you have/i.test(lowerMessage);
       
-      // Check if user is asking for products
-      const isAskingForProducts = productKeywords.some(keyword => lowerMessage.includes(keyword)) || 
-                                  /\b(recommend|suggest|what|which|best)\b/.test(lowerMessage);
+      // Check if user is asking about OR for products (any mention of product name or action with products)
+      const hasProductName = productKeywords.some(keyword => lowerMessage.includes(keyword));
+      const hasAction = actionKeywords.some(keyword => lowerMessage.includes(keyword));
       
-      if (isAskingForProducts) {
+      // User is asking about products if they mention a product name OR they use product action keywords
+      const isAskingAboutProducts = hasProductName || (hasAction && /\b(chicken|mutton|fish|meat|product|curry|biryani)\b/i.test(lowerMessage));
+      
+      if (isAskingAboutProducts) {
         // Extract product query from message
         let query = lowerMessage
-          .replace(/show me|see me|view|display|do you have|have you got|available|fresh|can i get|give me|show|see|you have|got any|take|give me|want|need|can you/gi, '')
+          .replace(/show me|see me|view|display|do you have|have you got|available|fresh|can i get|give me|show|see|you have|got any|take|give me|want|need|can you|tell me about|what is|which is|best|good for|perfect for|use for/gi, '')
           .trim();
         
-        // Remove common question words
-        query = query.replace(/\?|what|which|do|you|any|a |the |some /gi, '').trim();
+        // Remove common question words and punctuation
+        query = query.replace(/\?|what|which|do|you|any|a |the |some |please|pls/gi, '').trim();
         
         // If query is empty or too vague after removing keywords, don't show products
         if (!query || query.length < 2) {
@@ -152,30 +156,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const product = products[0];
       const lowerQuery = lowerMessage.toLowerCase();
       
-      // Check if user is asking about specific details (pieces, how many, pieces count, quantity, pieces per pack, etc)
-      const isAskingForDetails = /piece|how many|pieces|count|quantity|pcs|pack size|much|serve|per|weight|price|cost|rate|rupee|₹/i.test(lowerQuery);
+      // Always add product information to the response
+      const isAskingAboutProduct = /tell|about|info|detail|what|which|best|good|recommend|suggest|use for|good for|perfect for/i.test(lowerQuery);
       
-      if (isAskingForDetails) {
-        // Extract pieces information from weight field
-        const weightInfo = product.weight;
+      if (isAskingAboutProduct) {
+        // Build detailed product info response
+        let productInfo = `\n\n**📦 Product Details:**\n`;
+        productInfo += `• **Name:** ${product.name}\n`;
+        productInfo += `• **Weight/Quantity:** ${product.weight}\n`;
+        productInfo += `• **Price:** ${product.price}\n`;
+        productInfo += `• **Category:** ${product.category}\n`;
+        productInfo += `• **About:** ${product.description}\n`;
+        productInfo += `\n🥶 All our products are fresh, never frozen, and kept at the perfect 0-4°C cold chain for maximum freshness!`;
         
-        // Build friendly, conversational response
-        let detailsText = `Oh nice! Here's everything about the **${product.name}**:\n\n`;
-        detailsText += `🎯 **What you get:** ${weightInfo}\n`;
-        detailsText += `💵 **Price:** ${product.price}\n`;
-        detailsText += `✍️ **About it:** ${product.description}\n`;
-        
-        // If the query asks about pieces, emphasize the piece count
-        if (/piece|pcs|how many|count/i.test(lowerQuery)) {
-          const piecesMatch = weightInfo.match(/(\d+(?:\s*-\s*\d+)?)\s*(?:piece|pcs|pieces)/i);
-          if (piecesMatch) {
-            detailsText += `\n👉 **Pieces in pack:** ${piecesMatch[1]} pieces`;
-          }
-        }
-        
-        detailsText += `\n🥶 All our products are fresh, never frozen, and kept at the perfect 0-4°C cold chain. Ready to cook!`;
-        
-        text = detailsText;
+        text += productInfo;
       }
     }
 
