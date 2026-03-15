@@ -1,7 +1,8 @@
 {
-  "name": "licious-ai-assistant",
+  "name": "licious-haya",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Licious Haya - AI-powered food delivery assistant with intelligent product search and recommendations",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
