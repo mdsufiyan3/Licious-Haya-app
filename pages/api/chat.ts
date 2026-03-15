@@ -147,6 +147,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     }
 
+    // If a specific product was found, enhance the response with product details
+    if (products && products.length === 1) {
+      const product = products[0];
+      const lowerQuery = lowerMessage.toLowerCase();
+      
+      // Check if user is asking about specific details (pieces, how many, pieces count, quantity, pieces per pack, etc)
+      const isAskingForDetails = /piece|how many|pieces|count|quantity|pcs|pack size|much|serve|per|weight|price|cost|rate|rupee|₹/i.test(lowerQuery);
+      
+      if (isAskingForDetails) {
+        // Extract pieces information from weight field
+        const weightInfo = product.weight;
+        let detailsText = `Here are the details for **${product.name}**:\n\n`;
+        detailsText += `📦 **Weight/Quantity:** ${weightInfo}\n`;
+        detailsText += `💰 **Price:** ${product.price}\n`;
+        detailsText += `📝 **Description:** ${product.description}\n`;
+        detailsText += `🏷️ **Category:** ${product.category}\n`;
+        
+        // If the query asks about pieces, emphasize the piece count
+        if (/piece|pcs|how many|count/i.test(lowerQuery)) {
+          const piecesMatch = weightInfo.match(/(\d+(?:\s*-\s*\d+)?)\s*(?:piece|pcs|pieces|pieces)/i);
+          if (piecesMatch) {
+            detailsText += `\n✨ **Pieces:** ${piecesMatch[1]} pieces per pack`;
+          }
+        }
+        
+        text = detailsText;
+      }
+    }
+
     return res.status(200).json({ text, products });
   } catch (error) {
     console.error('Chat API error:', error);
