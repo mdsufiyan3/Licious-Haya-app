@@ -170,7 +170,11 @@ const App: React.FC = () => {
       {/* Sidebar for desktop */}
       <aside className="hidden md:flex flex-col w-64 bg-white border-r border-gray-200 p-6">
         <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 rounded-xl bg-[#E21D24] flex items-center justify-center text-white font-black italic shadow-lg shadow-red-200">L</div>
+          <img 
+            src="https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf"
+            alt="Licious Haya Logo"
+            className="w-10 h-10 rounded-xl object-contain shadow-lg shadow-red-200"
+          />
           <div>
             <h2 className="text-lg font-bold tracking-tight">Licious Haya</h2>
             <p className="text-xs text-gray-500">AI Assistant</p>
@@ -218,7 +222,11 @@ const App: React.FC = () => {
       <main className="flex-1 flex flex-col relative max-w-4xl mx-auto w-full px-4 md:px-6 overflow-hidden">
         <header className="py-4 flex items-center justify-between border-b border-gray-100 mb-2 bg-white/50 backdrop-blur-md sticky top-0 z-20">
           <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 rounded-xl bg-[#E21D24] flex items-center justify-center text-white font-black italic shadow-lg shadow-red-200">L</div>
+            <img 
+              src="https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf"
+              alt="Licious Haya Logo"
+              className="w-10 h-10 rounded-xl object-contain shadow-lg shadow-red-200"
+            />
             <div>
               <h1 className="text-sm font-bold tracking-tight">Licious Haya</h1>
               <p className="text-[10px] text-gray-500 font-medium uppercase tracking-widest">Freshness Concierge</p>
@@ -241,12 +249,11 @@ const App: React.FC = () => {
         <div ref={scrollRef} className="flex-1 overflow-y-auto pt-2 pb-28 md:pb-6 space-y-10 scrollbar-hide">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center space-y-10 mt-[-20px] animate-in fade-in duration-700">
-              <div className="w-24 h-24 rounded-[32px] bg-white border border-gray-100 flex items-center justify-center shadow-2xl relative">
-                <div className="text-[#E21D24] text-6xl font-black italic select-none">H</div>
-                <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-[#E21D24] rounded-full flex items-center justify-center border-4 border-white shadow-md">
-                  <div className="text-white scale-75"><SparkleIcon /></div>
-                </div>
-              </div>
+              <img 
+                src="https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf"
+                alt="Licious Haya Logo"
+                className="w-24 h-24 rounded-[32px] object-contain border border-gray-100 shadow-2xl p-2 bg-white"
+              />
               <div className="space-y-3 max-w-sm px-4">
                 <p className="text-[#1A1A1A] font-bold text-2xl leading-tight">
                   What's cooking on your <span className="text-[#E21D24]">Licious</span> menu?
@@ -262,7 +269,7 @@ const App: React.FC = () => {
                     {msg.role === MessageRole.ASSISTANT && (
                       <div className="flex items-center gap-2 mb-1 px-1">
                         <div className="w-6 h-6 rounded-lg bg-[#E21D24] text-white flex items-center justify-center text-[10px] font-black shadow-sm">H</div>
-                        <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Haya — Assistant</span>
+                        <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Haya</span>
                       </div>
                     )}
                     <div className={`max-w-[92%] md:max-w-[85%] rounded-[24px] leading-relaxed ${

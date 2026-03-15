@@ -18,9 +18,11 @@ const ProductsPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4">
           <div className="flex items-center justify-between mb-6">
             <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <div className="w-10 h-10 rounded-xl bg-[#E21D24] flex items-center justify-center text-white font-black italic shadow-lg shadow-red-200">
-                L
-              </div>
+              <img 
+                src="https://firebasestorage.googleapis.com/v0/b/assist-442ec.firebasestorage.app/o/haya-logo.png?alt=media&token=11f0c5d3-e818-4e7f-b612-4ddc29f0b9cf"
+                alt="Licious Haya Logo"
+                className="w-10 h-10 rounded-xl object-contain shadow-lg shadow-red-200"
+              />
               <div>
                 <h1 className="text-lg font-bold tracking-tight">Licious</h1>
                 <p className="text-xs text-gray-500">Fresh Products</p>
