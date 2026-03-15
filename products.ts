@@ -349,8 +349,8 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹345',
     weight: '850g | Combo Pack',
     description: 'Tender, juicy, assorted chicken combo. Chicken Curry Cut (Small - 13 to 16 Pieces) + Chicken Liver. Premium combination for special recipes.',
-    imageUrl: '',
-    productUrl: ''
+    imageUrl: 'https://dao54xqhg9jfa.cloudfront.net/OMS-ProductMerchantdising/0ced1b0b-5df6-ad6a-372f-75311c8e21a3/original/PDP_74_Chicken_curry_cut_small_and_liver.jpg',
+    productUrl: 'https://www.licious.in/chicken/chicken-curry-cut-small-13-to-pr_d9plc0ej4al?isCombo=true&showAddon=false'
   },
   {
     id: 'p40',
@@ -358,8 +358,8 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹345',
     weight: '850g | Combo Pack',
     description: 'Juicy, tender chicken for meaty meals. Chicken Curry Cut (Large - 8 to 10 Pieces) + Chicken Liver. Premium assorted combo pack.',
-    imageUrl: '',
-    productUrl: ''
+    imageUrl: 'https://dao54xqhg9jfa.cloudfront.net/OMS-ProductMerchantdising/9b617d79-4dee-dfb5-8e96-7b5164a6cfb8/original/PDP_71_Chicken_curry_cut_large_and_liver.jpg',
+    productUrl: 'https://www.licious.in/chicken/chicken-curry-cut-large-8-to-1-pr_b6ylc0egfu3?isCombo=true&showAddon=false'
   }
 ];
 
@@ -390,23 +390,35 @@ const calculateSimilarity = (query: string, productName: string): number => {
   if (q === p) return 100;
   
   // Name contains query exactly
-  if (p.includes(q)) return 90;
+  if (p.includes(q)) return 95;
   
-  // Query contains significant parts of product name
+  // Query contains product name exactly
+  if (q.includes(p)) return 90;
+  
+  // Split into words (filter out small words like 'of', 'a', 'the')
   const queryWords = q.split(' ').filter(w => w.length > 2);
   const productWords = p.split(' ').filter(w => w.length > 2);
   
-  let matchedWords = 0;
+  // Count exact word matches
+  let exactMatches = 0;
   for (const qWord of queryWords) {
-    if (productWords.some(pWord => pWord.includes(qWord) || qWord.includes(pWord))) {
-      matchedWords++;
+    if (productWords.includes(qWord)) {
+      exactMatches++;
     }
   }
   
-  if (matchedWords === 0) return 0;
-  const wordMatchScore = (matchedWords / Math.max(queryWords.length, productWords.length)) * 80;
+  if (exactMatches === 0) return 0;
   
-  return wordMatchScore;
+  // Check if ALL important query words are in the product
+  const allWordsMatch = queryWords.every(qWord => 
+    productWords.some(pWord => pWord === qWord || pWord.includes(qWord))
+  );
+  
+  if (allWordsMatch) return 85;
+  
+  // Partial match score
+  const matchScore = (exactMatches / queryWords.length) * 70;
+  return matchScore;
 };
 
 // Search for a specific product with high confidence match
@@ -424,6 +436,10 @@ export const findSpecificProduct = (query: string): Product | null => {
     }
   }
   
-  // Return product only if confidence is high (>65%)
-  return bestMatch && bestMatch.score > 65 ? bestMatch.product : null;
+  // Return product only if confidence is high (>50%) - stricter matching
+  if (bestMatch && bestMatch.score > 50) {
+    return bestMatch.product;
+  }
+  
+  return null;
 };

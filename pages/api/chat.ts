@@ -65,10 +65,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const productKeywords = ['show', 'see', 'view', 'buy', 'have', 'available', 'products', 'chicken', 'mutton', 'fish', 'salmon', 'eggs', 'prawns', 'meat', 'fresh'];
     let products = null;
     
+    // Check if user is asking for ALL products together
+    const isAskingForAll = /all products|show all|all items|what products|all curry|everything/i.test(lowerMessage);
+    
     if (productKeywords.some(keyword => lowerMessage.includes(keyword))) {
       // Extract product query from message
       let query = lowerMessage
-        .replace(/show me|see me|view|display|do you have|have you got|available|fresh|can i get|give me/gi, '')
+        .replace(/show me|see me|view|display|do you have|have you got|available|fresh|can i get|give me|show|see/gi, '')
         .trim();
       
       // If query is empty after removing keywords, use the original message
@@ -76,18 +79,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         query = lowerMessage;
       }
       
-      // First, try to find a specific product match
+      // ALWAYS try to find a specific product match first
       const specificProduct = findSpecificProduct(query);
       if (specificProduct) {
-        // User is asking for a specific product - return only that one
+        // User is asking for a specific product - return ONLY that one, NEVER multiple
         products = [specificProduct];
-      } else {
-        // User is asking for general products or multiple items - return all matching products
-        const foundProducts = searchProducts(query);
-        if (foundProducts.length > 0) {
-          products = foundProducts;
+      } else if (isAskingForAll) {
+        // Only show all products if user explicitly asks for "all products"
+        const allProducts = searchProducts(query);
+        if (allProducts.length > 0) {
+          products = allProducts;
         }
       }
+      // Otherwise return null (no products) - don't show random matches
     }
 
     return res.status(200).json({ text, products });
