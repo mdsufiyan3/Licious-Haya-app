@@ -407,8 +407,8 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹435',
     weight: '300g | 7-11 Pieces',
     description: 'Fat-layered mutton pieces for delicious Korma. Premium goat meat curry cut with perfect balance of fat and lean meat. Ideal for traditional curries.',
-    imageUrl: '',
-    productUrl: '',
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/a61a2a79-90fb-a0db-ff11-e7f02264fdf1/original/1709722937158.jpg',
+    productUrl: 'https://www.licious.in/red-meat/goat-korma-cut-pr_1lqnoibvv?isCombo=false&showAddon=false',
     category: ProductCategory.RED_MEAT
   },
   {
@@ -417,8 +417,8 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹627',
     weight: '500g | 11-18 Pieces | Serves 4',
     description: 'Perfect balance of fat & meat, make rich curries. Premium goat curry cut with ideal meat-to-fat ratio. 11-18 pieces per pack.',
-    imageUrl: '',
-    productUrl: '',
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/01b20af6-433c-6e9e-1048-c1e73e64a94f/original/PDP_6._Premium_Goat_Curry_Cut-01_(1).jpg',
+    productUrl: 'https://www.licious.in/red-meat/premium-goat-curry-cut-pr_okil7rg4jj5?isCombo=false&showAddon=false',
     category: ProductCategory.RED_MEAT
   },
   {
@@ -427,8 +427,8 @@ export const LICIOUS_PRODUCTS: Product[] = [
     price: '₹608',
     weight: '500g | 10-15 Pieces | Serves 2-3',
     description: 'Perfect balance of fat & meat for making rich curries. Premium quality lamb curry cut. Tender and flavorful red meat.',
-    imageUrl: '',
-    productUrl: '',
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/01b20af6-433c-6e9e-1048-c1e73e64a94f/original/PDP_6._Premium_Goat_Curry_Cut-01_(1).jpg',
+    productUrl: 'https://www.licious.in/red-meat/premium-goat-curry-cut-pr_okil7rg4jj5?isCombo=false&showAddon=false',
     category: ProductCategory.RED_MEAT
   },
   {

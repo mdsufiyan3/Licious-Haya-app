@@ -158,19 +158,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (isAskingForDetails) {
         // Extract pieces information from weight field
         const weightInfo = product.weight;
-        let detailsText = `Here are the details for **${product.name}**:\n\n`;
-        detailsText += `📦 **Weight/Quantity:** ${weightInfo}\n`;
-        detailsText += `💰 **Price:** ${product.price}\n`;
-        detailsText += `📝 **Description:** ${product.description}\n`;
-        detailsText += `🏷️ **Category:** ${product.category}\n`;
+        
+        // Build friendly, conversational response
+        let detailsText = `Oh nice! Here's everything about the **${product.name}**:\n\n`;
+        detailsText += `🎯 **What you get:** ${weightInfo}\n`;
+        detailsText += `💵 **Price:** ${product.price}\n`;
+        detailsText += `✍️ **About it:** ${product.description}\n`;
         
         // If the query asks about pieces, emphasize the piece count
         if (/piece|pcs|how many|count/i.test(lowerQuery)) {
-          const piecesMatch = weightInfo.match(/(\d+(?:\s*-\s*\d+)?)\s*(?:piece|pcs|pieces|pieces)/i);
+          const piecesMatch = weightInfo.match(/(\d+(?:\s*-\s*\d+)?)\s*(?:piece|pcs|pieces)/i);
           if (piecesMatch) {
-            detailsText += `\n✨ **Pieces:** ${piecesMatch[1]} pieces per pack`;
+            detailsText += `\n👉 **Pieces in pack:** ${piecesMatch[1]} pieces`;
           }
         }
+        
+        detailsText += `\n🥶 All our products are fresh, never frozen, and kept at the perfect 0-4°C cold chain. Ready to cook!`;
         
         text = detailsText;
       }
