@@ -135,6 +135,177 @@ export const LICIOUS_PRODUCTS: Product[] = [
     description: 'Fresh, antibiotic residue free chicken curry cut. Licious Chicken Curry Cut is a premium cut that includes the leg, breast & wings. This larger, tender cut has equal-sized pieces for uniform cooking and the juiciest bites. Perfect for a family of 4. Bone-in and large cuts ideal for curry preparation.',
     imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/7cb94552-ac3c-2689-d701-e918012036b2/original/1716983957848.png',
     productUrl: 'https://www.licious.in/chicken/chicken-curry-cut-large---8-to-10-pieces-pr_57234c427648b?isCombo=false&showAddon=false'
+  },
+  {
+    id: 'p16',
+    name: 'Chicken Boneless - Mini Bites',
+    price: '₹236',
+    weight: '250g | 20-25 Pieces | Serves 1-2',
+    description: 'Juicy, tender goodness of chicken in a mouthful. Perfect for snacking, appetizers, or quick meals. 20-25 mini bites in every pack.',
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/1dc1d00f-3b64-de1e-91ee-2a80651d0a17/original/1716976087923.png',
+    productUrl: 'https://www.licious.in/chicken/chicken-mini-bites---boneless-pr_fhijtqu0u5q?isCombo=false&showAddon=false'
+  },
+  {
+    id: 'p17',
+    name: 'Chicken Boneless Cubes',
+    price: '₹277',
+    weight: '450g | 12-16 Pieces | Serves 4',
+    description: 'Juicy, boneless pieces cut from the leg and breast. Perfect cubes for stir-fries, kebabs, and curries. Tender and flavorful.',
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/f8119f60-969c-d81a-51bc-8c8b83a9c955/original/1716981013470.png',
+    productUrl: 'https://www.licious.in/chicken/chicken-boneless---cubes-pr_ffojtznsds8?isCombo=false&showAddon=false'
+  },
+  {
+    id: 'p18',
+    name: 'Chicken Mince/Keema - 250gms (Mini Pack)',
+    price: '₹185',
+    weight: '250g | Serves 2-3',
+    description: 'Tender, perfectly ground meat from premium chicken. Ideal for meatballs, keema, and ground chicken recipes. Mini pack perfect for 2-3 servings.',
+    imageUrl: 'https://www.licious.in/chicken/chicken-keema-250-gms-mini-pac-pr_eq3lbgf566f?isCombo=false&showAddon=false',
+    productUrl: 'http://cdn.licious.in/catalog/OMS-ProductMerchantdising/08c19c9e-011b-7293-c1ec-ff8ffd54e8cd/original/1716978913661.png'
+  },
+  {
+    id: 'p19',
+    name: 'Chicken Breast Boneless (Large Pack)',
+    price: '₹587',
+    weight: '900g | 4-6 Pieces | Serves 6',
+    description: 'Skinless, boneless pieces of juicy chicken breasts. Premium quality large pack perfect for families. Lean protein for healthy meals.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p20',
+    name: 'Chicken - All Purpose Chunks',
+    price: '₹115',
+    weight: '150g | Serves 1-2',
+    description: 'Uneven boneless chunks perfect for toppings, salads, wraps and more. Versatile cuts for any recipe. Quick and convenient.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p21',
+    name: 'Chicken Breast - Boneless',
+    price: '₹292',
+    weight: '450g | 2-4 Pieces | Serves 4',
+    description: 'Enjoy tender pieces of juicy chicken breast. Boneless, skinless cuts ideal for grilling, baking, and cooking. Premium quality poultry.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p22',
+    name: 'Chicken Breast Boneless - Mini Pack',
+    price: '₹145',
+    weight: '1 piece | Serves 1',
+    description: 'Perfectly portioned for your fitness-focused meal plans. Single breast piece, ideal for meal prep and portion control. Premium quality.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p23',
+    name: 'Chicken Mince (Keema)',
+    price: '₹285',
+    weight: '450g | Serves 4',
+    description: 'For mouth-watering meatballs, keema & more. Perfectly ground chicken meat ideal for traditional recipes and modern preparations.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p24',
+    name: 'Premium Chicken Thigh Boneless',
+    price: '₹322',
+    weight: '450g | 3-5 Pieces | Serves 5',
+    description: 'Meaty, tender boneless chicken thighs. Juicy and flavorful cuts perfect for curries, stir-fries, and grilling. Premium quality.',
+    imageUrl: 'https://cdn.licious.in/catalog/OMS-ProductMerchantdising/501f54e7-ead9-b024-7f92-b883c348f5e7/original/1716974909369.png',
+    productUrl: 'https://www.licious.in/chicken/chicken-thigh-boneless-pr_3nqjtzosblz?isCombo=false&showAddon=false'
+  },
+  {
+    id: 'p25',
+    name: 'Premium Chicken Leg Curry Cut (Specialty)',
+    price: '₹249',
+    weight: '6 Pieces | Serves 2-3',
+    description: 'A perfect mix of thighs pieces and two drumsticks. Specialty cut from premium chicken legs. Juicy and tender, perfect for curries.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p26',
+    name: 'Classic Chicken Soup Bones',
+    price: '₹129',
+    weight: '250g | 11-12 Pieces',
+    description: 'Cleaned chicken bones for a delicious, flavourful stock. Perfect for making broths, soups, and risottos with rich, deep flavors.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p27',
+    name: 'Chicken Drumsticks - Pack of 2 (Mini Pack)',
+    price: '₹139',
+    weight: '2 Pieces | Serves 1-2',
+    description: 'Juicy bone-in chicken drumsticks, cut from the leg. Perfect portion for individual servings. Tender and flavorful.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p28',
+    name: 'Chicken Kebab Fry Cut',
+    price: '₹139',
+    weight: '250g | 10-16 Pieces',
+    description: 'Perfectly cut pieces for authentic south-style fried kebabs. Boneless cuts ideal for kebabs, tandoori preparations, and frying.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p29',
+    name: 'Premium Chicken Tangdi Biryani Cut',
+    price: '₹331',
+    weight: '550g | 6 Pieces | Serves 2-3',
+    description: 'Juicy, tender chicken drumsticks & whole thigh pieces. Premium specialty cut exclusively for biryanis and special rice preparations.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p30',
+    name: 'Classic Chicken Biryani Cut',
+    price: '₹235',
+    weight: '5 Pieces | Serves 2-3',
+    description: '5 juicy pieces for delicious biryanis. Specially cut and selected for biryani preparations. Tender and aromatic.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p31',
+    name: 'Chicken Lollipop - Pack of 10',
+    price: '₹195',
+    weight: '10 Pieces | Serves 2',
+    description: '10 pieces of meaty chicken lollipops. Deep-fried drumstick pieces with meat at the end. Perfect appetizer or party snack.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p32',
+    name: 'Chicken Wings with Skin',
+    price: '₹175',
+    weight: '430g | 6 Pieces | Serves 3',
+    description: 'Cut & cleaned chicken wings with skin. Crispy when fried, tender when roasted. Perfect for wings recipes and appetizers.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p33',
+    name: 'Chicken Leg With Thigh - Pack of 3',
+    price: '₹284',
+    weight: '3 Pieces | Serves 2-3',
+    description: 'Juicy bone-in leg pieces for delicious curries or biryanis. Premium quality with perfect bone-to-meat ratio. 3 pieces per pack.',
+    imageUrl: '',
+    productUrl: ''
+  },
+  {
+    id: 'p34',
+    name: 'Chicken Drumstick - Pack Of 6',
+    price: '₹291',
+    weight: '6 Pieces | Serves 2-3',
+    description: 'Juicy bone-in chicken drumsticks, cut from the leg. Perfect for curries, grilling, and tandoori preparations. 6 pieces per pack.',
+    imageUrl: '',
+    productUrl: ''
   }
 ];
 
