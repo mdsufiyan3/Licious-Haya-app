@@ -60,7 +60,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       text = "I'm Haya, your Licious assistant. How can I help you today?";
     }
 
-    return res.status(200).json({ text, products: null });
+    // Check if user wants to see products
+    const lowerMessage = message.toLowerCase();
+    const productKeywords = ['show', 'see', 'view', 'buy', 'have', 'available', 'products', 'chicken', 'mutton', 'fish', 'salmon', 'eggs', 'prawns', 'meat', 'fresh'];
+    let products = null;
+    
+    if (productKeywords.some(keyword => lowerMessage.includes(keyword))) {
+      // Extract product query from message
+      let query = lowerMessage
+        .replace(/show me|see me|view|display|do you have|have you got|available|fresh|can i get|give me/gi, '')
+        .trim();
+      
+      // If query is empty after removing keywords, use the original message
+      if (!query || query.length < 2) {
+        query = lowerMessage;
+      }
+      
+      // Always search for products with the query
+      const foundProducts = searchProducts(query);
+      if (foundProducts.length > 0) {
+        products = foundProducts;
+      }
+    }
+
+    return res.status(200).json({ text, products });
   } catch (error) {
     console.error('Chat API error:', error);
     // Fallback mock response for testing

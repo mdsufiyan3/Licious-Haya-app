@@ -144,9 +144,9 @@ const App: React.FC = () => {
         id: (Date.now() + 1).toString(),
         role: MessageRole.ASSISTANT,
         content: response.text,
-        products: response.products || undefined,
+        products: (response.products && response.products.length > 0) ? response.products : undefined,
         timestamp: Date.now(),
-        type: response.products ? 'product' : 'text'
+        type: (response.products && response.products.length > 0) ? 'product' : 'text'
       }]);
     } catch (error) {
       console.error("AI Error:", error);
@@ -194,7 +194,6 @@ const App: React.FC = () => {
         <div className="mt-8">
           <button
             onClick={() => {
-              // Trigger PWA install
               if ('serviceWorker' in navigator && window.deferredPrompt) {
                 window.deferredPrompt.prompt();
                 window.deferredPrompt.userChoice.then((choiceResult: { outcome: string }) => {
@@ -214,17 +213,17 @@ const App: React.FC = () => {
 
       <main className="flex-1 flex flex-col relative max-w-4xl mx-auto w-full px-4 md:px-6 overflow-hidden">
         <header className="py-4 flex items-center justify-between border-b border-gray-100 mb-2 bg-white/50 backdrop-blur-md sticky top-0 z-20">
-            <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#E21D24] flex items-center justify-center text-white font-black italic shadow-lg shadow-red-200">L</div>
-                <div>
-                    <h1 className="text-sm font-bold tracking-tight">Licious Haya</h1>
-                    <p className="text-[10px] text-gray-500 font-medium uppercase tracking-widest">Freshness Concierge</p>
-                </div>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#E21D24] flex items-center justify-center text-white font-black italic shadow-lg shadow-red-200">L</div>
+            <div>
+              <h1 className="text-sm font-bold tracking-tight">Licious Haya</h1>
+              <p className="text-[10px] text-gray-500 font-medium uppercase tracking-widest">Freshness Concierge</p>
             </div>
-            <div className="flex items-center gap-1 bg-green-50 px-2 py-1 rounded-full">
-                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-[10px] text-green-700 font-bold uppercase tracking-wider">Kitchen Live</span>
-            </div>
+          </div>
+          <div className="flex items-center gap-1 bg-green-50 px-2 py-1 rounded-full">
+            <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+            <span className="text-[10px] text-green-700 font-bold uppercase tracking-wider">Kitchen Live</span>
+          </div>
         </header>
 
         <div ref={scrollRef} className="flex-1 overflow-y-auto pt-2 pb-28 md:pb-6 space-y-10 scrollbar-hide">
@@ -233,7 +232,7 @@ const App: React.FC = () => {
               <div className="w-24 h-24 rounded-[32px] bg-white border border-gray-100 flex items-center justify-center shadow-2xl relative">
                 <div className="text-[#E21D24] text-6xl font-black italic select-none">H</div>
                 <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-[#E21D24] rounded-full flex items-center justify-center border-4 border-white shadow-md">
-                   <div className="text-white scale-75"><SparkleIcon /></div>
+                  <div className="text-white scale-75"><SparkleIcon /></div>
                 </div>
               </div>
               <div className="space-y-3 max-w-sm px-4">
@@ -244,72 +243,102 @@ const App: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="space-y-12 pb-24">
-                {messages.map((msg, idx) => (
-                  <div key={msg.id} className={`flex ${msg.role === MessageRole.USER ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-400`}>
-                    <div className={`flex flex-col gap-2 w-full ${msg.role === MessageRole.USER ? 'items-end' : 'items-start'}`}>
-                      {msg.role === MessageRole.ASSISTANT && (
-                        <div className="flex items-center gap-2 mb-1 px-1">
-                          <div className="w-6 h-6 rounded-lg bg-[#E21D24] text-white flex items-center justify-center text-[10px] font-black shadow-sm">H</div>
-                          <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Haya — Assistant</span>
-                        </div>
-                      )}
-                      <div className={`max-w-[92%] md:max-w-[85%] rounded-[24px] leading-relaxed ${
-                        msg.role === MessageRole.USER 
-                        ? 'bg-[#E21D24] text-white p-4 shadow-lg' 
-                        : 'bg-transparent py-1 px-1 text-[#1A1A1A]'
-                      }`}>
-                        {msg.role === MessageRole.ASSISTANT ? (
-                          idx === messages.length - 1 ? (
-                            <TypewriterMessage content={msg.content} onComplete={scrollToBottom} />
-                          ) : (
-                            <FormattedMessage content={msg.content} />
-                          )
-                        ) : (
-                          <p className="text-[15px] font-medium leading-relaxed">{msg.content}</p>
-                        )}
-                      </div>
-                      {msg.role === MessageRole.ASSISTANT && msg.products && msg.products.length > 0 && (
-                        <div className="w-full overflow-x-auto flex gap-4 py-4 px-1 scrollbar-hide animate-in fade-in slide-in-from-right-4 duration-500">
-                          {msg.products.map(p => (
-                            <ProductCard key={p.id} product={p} />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-                {isLoading && (
-                  <div className="flex justify-start animate-in fade-in duration-300">
-                    <div className="flex flex-col gap-2 w-full items-start">
+            <div className="space-y-12 pb-24 md:pb-0">
+              {messages.map((msg, idx) => (
+                <div key={msg.id} className={`flex ${msg.role === MessageRole.USER ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-400`}>
+                  <div className={`flex flex-col gap-2 w-full ${msg.role === MessageRole.USER ? 'items-end' : 'items-start'}`}>
+                    {msg.role === MessageRole.ASSISTANT && (
                       <div className="flex items-center gap-2 mb-1 px-1">
-                        <div className="w-6 h-6 rounded-lg bg-[#E21D24] text-white flex items-center justify-center text-[10px] font-black">H</div>
+                        <div className="w-6 h-6 rounded-lg bg-[#E21D24] text-white flex items-center justify-center text-[10px] font-black shadow-sm">H</div>
                         <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Haya — Assistant</span>
                       </div>
-                      <div className="py-1 px-1">
-                         <span className="shimmer-text text-[15px] font-medium italic tracking-wide">Thinking...</span>
+                    )}
+                    <div className={`max-w-[92%] md:max-w-[85%] rounded-[24px] leading-relaxed ${
+                      msg.role === MessageRole.USER 
+                      ? 'bg-[#E21D24] text-white p-4 shadow-lg' 
+                      : 'bg-transparent py-1 px-1 text-[#1A1A1A]'
+                    }`}>
+                      {msg.role === MessageRole.ASSISTANT ? (
+                        idx === messages.length - 1 ? (
+                          <TypewriterMessage content={msg.content} onComplete={scrollToBottom} />
+                        ) : (
+                          <FormattedMessage content={msg.content} />
+                        )
+                      ) : (
+                        <p className="text-[15px] font-medium leading-relaxed">{msg.content}</p>
+                      )}
+                    </div>
+                    {msg.role === MessageRole.ASSISTANT && msg.products && msg.products.length > 0 && (
+                      <div className="w-full overflow-x-auto flex gap-4 py-4 px-1 scrollbar-hide animate-in fade-in slide-in-from-right-4 duration-500">
+                        {msg.products.map(p => (
+                          <ProductCard key={p.id} product={p} />
+                        ))}
                       </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+              {isLoading && (
+                <div className="flex justify-start animate-in fade-in duration-300">
+                  <div className="flex flex-col gap-2 w-full items-start">
+                    <div className="flex items-center gap-2 mb-1 px-1">
+                      <div className="w-6 h-6 rounded-lg bg-[#E21D24] text-white flex items-center justify-center text-[10px] font-black">H</div>
+                      <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Haya — Assistant</span>
+                    </div>
+                    <div className="py-1 px-1">
+                      <span className="shimmer-text text-[15px] font-medium italic tracking-wide">Thinking...</span>
                     </div>
                   </div>
-                )}
+                </div>
+              )}
             </div>
           )}
         </div>
 
-        <div className="pb-20 pt-2 bg-white/80 backdrop-blur-xl border-t border-gray-100 md:pb-8 fixed md:static bottom-4 left-0 right-0 md:relative w-full md:w-auto z-50 mx-2 md:mx-0 rounded-t-2xl md:rounded-none">
-          <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide px-4 md:px-0">
-            <button onClick={() => setInputText("Show me fresh chicken breast")} className="flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-[12px] font-bold text-gray-600 whitespace-nowrap hover:bg-white hover:border-[#E21D24] hover:text-[#E21D24] transition-all shadow-sm">
-              <ChefHatIcon /> Chicken Breast
-            </button>
-            <button onClick={() => setInputText("Show me some fresh mutton")} className="flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-[12px] font-bold text-gray-600 whitespace-nowrap hover:bg-white hover:border-[#E21D24] hover:text-[#E21D24] transition-all shadow-sm">
-               Tender Mutton
-            </button>
-            <button onClick={() => setInputText("Do you have Atlantic salmon?")} className="flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-[12px] font-bold text-gray-600 whitespace-nowrap hover:bg-white hover:border-[#E21D24] hover:text-[#E21D24] transition-all shadow-sm">
-              <FishIcon /> Atlantic Salmon
-            </button>
-          </div>
-          <div className="bg-[#F9F9F9] rounded-[24px] px-4 py-2.5 mx-4 md:mx-0 border border-gray-200 focus-within:border-[#E21D24] focus-within:bg-white shadow-sm focus-within:shadow-xl transition-all flex items-end gap-2 min-h-[56px] relative">
-              <textarea
+        {/* ──────────────────────────────────────────────── */}
+        {/*               UPDATED INPUT BAR                   */}
+        {/* ──────────────────────────────────────────────── */}
+        <div className="
+          fixed bottom-0 left-0 right-0 z-50
+          pb-[env(safe-area-inset-bottom)]
+          pt-2
+          bg-gradient-to-t from-white via-white to-transparent
+          md:static md:z-auto md:bg-transparent md:pb-8 md:pt-4
+        ">
+          <div className="px-4 md:px-0">
+            <div className="flex gap-2 overflow-x-auto pb-3 scrollbar-hide">
+              <button 
+                onClick={() => setInputText("Show me fresh chicken breast")} 
+                className="flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-[12px] font-bold text-gray-600 whitespace-nowrap hover:bg-white hover:border-[#E21D24] hover:text-[#E21D24] transition-all shadow-sm"
+              >
+                <ChefHatIcon /> Chicken Breast
+              </button>
+              <button 
+                onClick={() => setInputText("Show me some fresh mutton")} 
+                className="flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-[12px] font-bold text-gray-600 whitespace-nowrap hover:bg-white hover:border-[#E21D24] hover:text-[#E21D24] transition-all shadow-sm"
+              >
+                Tender Mutton
+              </button>
+              <button 
+                onClick={() => setInputText("Do you have Atlantic salmon?")} 
+                className="flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-[12px] font-bold text-gray-600 whitespace-nowrap hover:bg-white hover:border-[#E21D24] hover:text-[#E21D24] transition-all shadow-sm"
+              >
+                <FishIcon /> Atlantic Salmon
+              </button>
+            </div>
+
+            <div className="
+              bg-white rounded-t-3xl shadow-[0_-6px_16px_rgba(0,0,0,0.08)]
+              border-t border-gray-200
+              px-4 pt-3 pb-[calc(0.75rem + env(safe-area-inset-bottom))]
+              md:rounded-[24px] md:shadow-sm md:border md:mb-0 md:pb-2.5
+            ">
+              <div className="
+                flex items-end gap-2 min-h-[52px]
+                focus-within:border-[#E21D24] focus-within:shadow-md
+                transition-all
+              ">
+                <textarea
                   ref={textareaRef}
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
@@ -320,19 +349,28 @@ const App: React.FC = () => {
                     }
                   }}
                   placeholder="Ask Haya anything..."
-                  className="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none outline-none text-[#1A1A1A] placeholder-gray-400 py-2 px-1 resize-none h-[24px] max-h-[160px] overflow-y-auto text-[15px] caret-[#E21D24] scrollbar-hide leading-6"
+                  className="
+                    flex-1 bg-transparent border-none focus:ring-0 focus:outline-none outline-none
+                    text-[#1A1A1A] placeholder-gray-400 py-2.5 px-1 resize-none
+                    max-h-[160px] overflow-y-auto text-[15px] caret-[#E21D24]
+                    scrollbar-hide leading-6
+                  "
                 />
                 <button
                   onClick={handleSend}
                   disabled={!inputText.trim() || isLoading}
-                  className={`w-10 h-10 rounded-full flex-shrink-0 transition-all flex items-center justify-center mb-0.5 ${
-                    inputText.trim() && !isLoading 
-                    ? 'bg-[#E21D24] text-white hover:bg-[#C1181E] shadow-lg shadow-red-200' 
-                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  }`}
+                  className={`
+                    w-11 h-11 rounded-full flex-shrink-0 transition-all flex items-center justify-center mb-1
+                    ${inputText.trim() && !isLoading 
+                      ? 'bg-[#E21D24] text-white hover:bg-[#C1181E] shadow-lg shadow-red-200' 
+                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    }
+                  `}
                 >
                   <SendIcon />
                 </button>
+              </div>
+            </div>
           </div>
         </div>
       </main>

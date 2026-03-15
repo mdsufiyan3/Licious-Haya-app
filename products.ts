@@ -58,9 +58,19 @@ export const LICIOUS_PRODUCTS: Product[] = [
 ];
 
 export const searchProducts = (query: string): Product[] => {
-  const q = query.toLowerCase();
-  return LICIOUS_PRODUCTS.filter(p => 
-    p.name.toLowerCase().includes(q) || 
-    p.description.toLowerCase().includes(q)
-  );
+  const q = query.toLowerCase().trim();
+  
+  // If query is empty, return all products
+  if (!q || q.length < 1) {
+    return LICIOUS_PRODUCTS;
+  }
+  
+  return LICIOUS_PRODUCTS.filter(p => {
+    const name = p.name.toLowerCase();
+    const desc = p.description.toLowerCase();
+    
+    // Check if any part of the query matches
+    const queryParts = q.split(' ').filter(part => part.length > 0);
+    return queryParts.some(part => name.includes(part) || desc.includes(part));
+  });
 };
